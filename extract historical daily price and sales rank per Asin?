@@ -1,0 +1,43 @@
+New to python and mostly to convert code to reslove my problem.
+
+Does anyone know working code for extract historical daily price and sales rank per Asin?
+I have purchase keepa API and try to copy some code from github, but now working.
+for example, I would like to get historical daily price and sales rank for 'B014EKQ5AA'? my ideal output will include date, price and sales rank?
+any one know it? thank you very much.
+
+here is my code:
+
+import keepa
+import logging
+import inspect
+logging.basicConfig()
+import datetime
+import requests
+import numpy as np
+accesskey = 'xxx' # enter real access key here
+api = keepa.Keepa(accesskey)
+asins = ['B014EKQ5AA']
+asins = np.asarray(['B014EKQ5AA'])
+products = api.query(asins)
+product = products[0]
+
+for x in range(len(asins)):
+    print('ASIN is ' + products[x]['asin'])
+    print ('Title is ' + products[x]['title'])
+key = 'SALES'
+
+history = product['data']
+print(history[key][-1])
+# sales rank array (and time) can be obtained with:
+sales_dt = history['%s_time' % key]
+sales = history[key]
+
+# plot
+import matplotlib.pyplot as plt
+plt.step(sales_dt, sales, where='pre')
+plt.show()
+
+
+output is blank
+
+
